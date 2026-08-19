@@ -1,0 +1,53 @@
+/vendor
+/node_modules
+/.idea
+/.vscode
+/.env
+/.env.local
+/.env.*.backup
+/.phpunit.result.cache
+/public/storage
+/storage/*.key
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/testing
+/storage/logs
+/.sass-cache
+/.npm
+/.yarn
+/.parcel-cache
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+composer.lock
+package-lock.json
+.pnpm-debug.log
+
+# Ignore MacOS files
+*.DS_Store
+
+# Ignore IDE files
+*.sublime-project
+*.sublime-workspace
+
+# Ignore node build output
+/dist
+
+# Ignore compiled front-end assets
+/public/js
+/public/css
+/public/mix-manifest.json
+
+# Ignore vendor folder
+/vendor
+
+# Local env
+.env
+
+# Docker
+docker-compose.override.yml
+.env.local
+
+# Laravel Mix hot file
+/hot
