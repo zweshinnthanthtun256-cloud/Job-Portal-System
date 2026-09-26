@@ -1,0 +1,57 @@
+services:
+  app:
+    build: {context: ., dockerfile: docker/production/Dockerfile}
+    env_file: ${APP_ENV_FILE:-.env.production}
+    restart: unless-stopped
+    volumes: [app-storage:/var/www/html/storage/app]
+    depends_on: [mysql, redis]
+  web:
+    build: {context: ., dockerfile: docker/production/Dockerfile.nginx}
+    restart: unless-stopped
+    ports: ['80:80']
+    volumes: [app-storage:/var/www/html/storage/app:ro]
+    depends_on: [app]
+  queue:
+    build: {context: ., dockerfile: docker/production/Dockerfile}
+    command: php artisan queue:work --sleep=2 --tries=3 --timeout=120 --max-time=3600
+    env_file: ${APP_ENV_FILE:-.env.production}
+    restart: unless-stopped
+    volumes: [app-storage:/var/www/html/storage/app]
+    depends_on: [mysql, redis]
+  scheduler:
+    build: {context: ., dockerfile: docker/production/Dockerfile}
+    command: php artisan schedule:work
+    env_file: ${APP_ENV_FILE:-.env.production}
+    restart: unless-stopped
+    volumes: [app-storage:/var/www/html/storage/app]
+    depends_on: [mysql, redis]
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes: [mysql-data:/var/lib/mysql]
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes: [redis-data:/data]
+  backup:
+    build: {context: ., dockerfile: docker/production/Dockerfile.backup}
+    env_file: ${APP_ENV_FILE:-.env.production}
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      BACKUP_RETENTION_DAYS: 14
+    volumes:
+      - app-storage:/var/www/html/storage/app:ro
+      - backups:/backups
+    depends_on: [mysql]
+volumes:
+  app-storage:
+  mysql-data:
+  redis-data:
+  backups:

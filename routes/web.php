@@ -1,0 +1,105 @@
+<?php
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployerJobController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InterviewController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SavedJobController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', HomeController::class)->name('home');
+Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('/companies/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');
+Route::get('/companies/{company:slug}/assets/{type}', [CompanyController::class, 'asset'])->name('companies.asset');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create'])->name('login');
+    Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:login')->name('login.store');
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('throttle:6,1')->name('register.store');
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->middleware('throttle:5,1')->name('password.email');
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
+    Route::get('/verify-email', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('verification.send');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::post('/jobs/{job}/applications', [ApplicationController::class, 'store'])->middleware('role:job_seeker')->name('applications.store');
+    Route::get('/applications', [ApplicationController::class, 'index'])->middleware('role:job_seeker')->name('applications.index');
+    Route::patch('/applications/{application}/withdraw', [ApplicationController::class, 'withdraw'])->middleware('role:job_seeker')->name('applications.withdraw');
+    Route::get('/recommendations', [JobController::class, 'recommendations'])->middleware('role:job_seeker')->name('jobs.recommendations');
+    Route::get('/saved-jobs', [SavedJobController::class, 'index'])->middleware('role:job_seeker')->name('saved-jobs.index');
+    Route::post('/saved-jobs/{job}', [SavedJobController::class, 'store'])->middleware('role:job_seeker')->name('saved-jobs.store');
+    Route::delete('/saved-jobs/{job}', [SavedJobController::class, 'destroy'])->middleware('role:job_seeker')->name('saved-jobs.destroy');
+    Route::get('/employer/jobs', [EmployerJobController::class, 'index'])->middleware('role:employer')->name('employer.jobs.index');
+    Route::post('/employer/jobs', [EmployerJobController::class, 'store'])->middleware('role:employer')->name('employer.jobs.store');
+    Route::get('/employer/jobs/{job}/edit', [EmployerJobController::class, 'edit'])->middleware('role:employer')->name('employer.jobs.edit');
+    Route::patch('/employer/jobs/{job}', [EmployerJobController::class, 'update'])->middleware('role:employer')->name('employer.jobs.update');
+    Route::post('/employer/jobs/{job}/duplicate', [EmployerJobController::class, 'duplicate'])->middleware('role:employer')->name('employer.jobs.duplicate');
+    Route::patch('/employer/jobs/{job}/status', [EmployerJobController::class, 'status'])->middleware('role:employer')->name('employer.jobs.status');
+    Route::delete('/employer/jobs/{job}', [EmployerJobController::class, 'destroy'])->middleware('role:employer')->name('employer.jobs.destroy');
+    Route::get('/employer/candidates', [CandidateController::class, 'index'])->middleware('role:employer')->name('employer.candidates.index');
+    Route::patch('/employer/candidates/{application}', [CandidateController::class, 'update'])->middleware('role:employer')->name('employer.candidates.update');
+    Route::get('/profile', [ProfileController::class, 'edit'])->middleware('role:job_seeker')->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->middleware('role:job_seeker')->name('profile.update');
+    Route::post('/profile/educations', [ProfileController::class, 'education'])->middleware('role:job_seeker')->name('profile.education.store');
+    Route::delete('/profile/educations/{education}', [ProfileController::class, 'destroyEducation'])->middleware('role:job_seeker')->name('profile.education.destroy');
+    Route::post('/profile/experiences', [ProfileController::class, 'experience'])->middleware('role:job_seeker')->name('profile.experience.store');
+    Route::delete('/profile/experiences/{experience}', [ProfileController::class, 'destroyExperience'])->middleware('role:job_seeker')->name('profile.experience.destroy');
+    Route::put('/profile/skills', [ProfileController::class, 'skills'])->middleware('role:job_seeker')->name('profile.skills');
+    Route::post('/profile/resumes', [ProfileController::class, 'resume'])->middleware('role:job_seeker')->name('profile.resume.store');
+    Route::post('/profile/photo', [ProfileController::class, 'photo'])->middleware('role:job_seeker')->name('profile.photo');
+    Route::post('/profile/languages', [ProfileController::class, 'language'])->middleware('role:job_seeker')->name('profile.languages.store');
+    Route::delete('/profile/languages/{language}', [ProfileController::class, 'destroyLanguage'])->middleware('role:job_seeker')->name('profile.languages.destroy');
+    Route::post('/profile/certifications', [ProfileController::class, 'certification'])->middleware('role:job_seeker')->name('profile.certifications.store');
+    Route::delete('/profile/certifications/{certification}', [ProfileController::class, 'destroyCertification'])->middleware('role:job_seeker')->name('profile.certifications.destroy');
+    Route::get('/resumes/{resume}/download', [ProfileController::class, 'download'])->name('resumes.download');
+    Route::delete('/resumes/{resume}', [ProfileController::class, 'destroyResume'])->middleware('role:job_seeker')->name('profile.resume.destroy');
+    Route::get('/employer/company', [CompanyController::class, 'mine'])->middleware('role:employer')->name('companies.mine');
+    Route::get('/companies/{company}/manage', [CompanyController::class, 'edit'])->middleware('role:employer')->name('companies.edit');
+    Route::patch('/companies/{company}', [CompanyController::class, 'update'])->middleware('role:employer')->name('companies.update');
+    Route::post('/companies/{company}/media', [CompanyController::class, 'media'])->middleware('role:employer')->name('companies.media');
+    Route::post('/companies/{company}/members', [CompanyController::class, 'addMember'])->middleware('role:employer')->name('companies.members.store');
+    Route::delete('/companies/{company}/members/{user}', [CompanyController::class, 'removeMember'])->middleware('role:employer')->name('companies.members.destroy');
+    Route::get('/interviews', [InterviewController::class, 'index'])->name('interviews.index');
+    Route::post('/applications/{application}/interviews', [InterviewController::class, 'store'])->middleware('role:employer')->name('interviews.store');
+    Route::patch('/interviews/{interview}', [InterviewController::class, 'update'])->middleware('role:employer')->name('interviews.update');
+    Route::patch('/interviews/{interview}/cancel', [InterviewController::class, 'cancel'])->middleware('role:employer')->name('interviews.cancel');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{notification}', [NotificationController::class, 'read'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])->name('notifications.read-all');
+    Route::put('/notifications/preferences', [NotificationController::class, 'preferences'])->name('notifications.preferences');
+    Route::post('/jobs/{job}/reports', [ReportController::class, 'store'])->name('reports.store');
+    Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
+    Route::patch('/admin/users/{user}', [AdminController::class, 'user'])->middleware('role:admin')->name('admin.users.update');
+    Route::patch('/admin/companies/{company}', [AdminController::class, 'company'])->middleware('role:admin')->name('admin.companies.update');
+    Route::patch('/admin/jobs/{job}', [AdminController::class, 'job'])->middleware('role:admin')->name('admin.jobs.update');
+    Route::patch('/admin/reports/{report}', [AdminController::class, 'report'])->middleware('role:admin')->name('admin.reports.update');
+    Route::put('/admin/settings', [AdminController::class, 'settings'])->middleware('role:admin')->name('admin.settings');
+    Route::post('/admin/categories', [AdminController::class, 'category'])->middleware('role:admin')->name('admin.categories.store');
+    Route::delete('/admin/categories/{category}', [AdminController::class, 'destroyCategory'])->middleware('role:admin')->name('admin.categories.destroy');
+    Route::post('/admin/skills', [AdminController::class, 'skill'])->middleware('role:admin')->name('admin.skills.store');
+    Route::delete('/admin/skills/{skill}', [AdminController::class, 'destroySkill'])->middleware('role:admin')->name('admin.skills.destroy');
+});

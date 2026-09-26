@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: jobsphere-demo
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: JobSphere
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: ASSET_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        sync: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: MAIL_MAILER
+        value: log
+      - key: DEMO_MODE
+        value: "true"
