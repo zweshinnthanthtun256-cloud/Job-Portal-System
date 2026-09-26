@@ -13,7 +13,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 FROM php:8.3-fpm-alpine
-RUN apk add --no-cache icu-dev libzip-dev nginx supervisor gettext && docker-php-ext-install intl mbstring pdo_pgsql opcache zip
+RUN apk add --no-cache icu-dev libzip-dev postgresql-dev nginx supervisor gettext && docker-php-ext-install intl mbstring pdo_pgsql opcache zip
 WORKDIR /var/www/html
 COPY . .
 COPY --from=vendor /app/vendor ./vendor
