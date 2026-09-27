@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Render terminates TLS before forwarding requests to the container.
+        // Trust that proxy so generated redirects and secure URLs keep HTTPS.
+        $middleware->trustProxies(at: '*');
         $middleware->web(append: [HandleInertiaRequests::class]);
         $middleware->alias(['role' => EnsureUserHasRole::class]);
     })
