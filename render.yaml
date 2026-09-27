@@ -33,6 +33,20 @@ services:
       - key: LOG_CHANNEL
         value: stderr
       - key: MAIL_MAILER
-        value: log
+        sync: false
+      - key: MAIL_HOST
+        sync: false
+      - key: MAIL_PORT
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_SCHEME
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        sync: false
+      - key: MAIL_FROM_NAME
+        sync: false
       - key: DEMO_MODE
         value: "true"
