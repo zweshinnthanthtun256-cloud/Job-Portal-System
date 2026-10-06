@@ -2,7 +2,7 @@
 
 **Find the right job. Hire the right talent.**
 
-JobSphere is a production-oriented job portal built with Laravel 12, React, Inertia.js, Tailwind CSS, and MySQL. It includes role-aware authentication and email verification, password recovery, scored candidate profiles with languages and certifications, private PDF resumes, company membership and public brand pages, complete employer job management, application timelines and withdrawal, conflict-aware interview scheduling, queued email/database notifications with preferences, recommendations, reports, audit logging, administration analytics/settings, development seed data, and focused security tests.
+JobSphere is a production-oriented job portal built with Laravel 12, React, Inertia.js, Tailwind CSS, and MySQL. It includes role-aware authentication, scored candidate profiles with languages and certifications, private PDF resumes, company membership and public brand pages, complete employer job management, application timelines and withdrawal, conflict-aware interview scheduling, in-app notifications, recommendations, reports, audit logging, administration analytics/settings, development seed data, and focused security tests.
 
 ## Requirements
 
@@ -52,7 +52,7 @@ pnpm run build
 ./vendor/bin/pint --test
 ```
 
-The feature suite covers registration and verification flow, employer company ownership, login/logout, job lifecycle operations, application withdrawal, duplicate applications, expired jobs, private resume access, company-member privileges, interview isolation and time conflicts, profile extensions, notification preferences, admin authorization, and cross-company isolation. The CI workflow runs the suite against MySQL 8.4.
+The feature suite covers registration, employer company ownership, login/logout, job lifecycle operations, application withdrawal, duplicate applications, expired jobs, private resume access, company-member privileges, interview isolation and time conflicts, profile extensions, in-app notifications, admin authorization, and cross-company isolation. The CI workflow runs the suite against MySQL 8.4.
 
 ## Architecture and security
 

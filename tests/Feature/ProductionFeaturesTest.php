@@ -53,15 +53,14 @@ class ProductionFeaturesTest extends TestCase
         $this->assertSame(1, Interview::count());
     }
 
-    public function test_profile_extensions_and_notification_preferences_are_saved(): void
+    public function test_profile_extensions_and_notifications_page_are_available(): void
     {
         $seeker = User::factory()->create();
         $this->actingAs($seeker)->post(route('profile.languages.store'), ['name' => 'English', 'proficiency' => 'professional'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->post(route('profile.certifications.store'), ['name' => 'AWS Associate', 'issuer' => 'AWS'])->assertSessionHasNoErrors();
-        $this->actingAs($seeker)->put(route('notifications.preferences'), ['database_enabled' => true, 'email_application_updates' => false, 'email_interviews' => true, 'email_recommendations' => false])->assertSessionHasNoErrors();
+        $this->actingAs($seeker)->get(route('notifications.index'))->assertOk();
         $this->assertDatabaseHas('languages', ['user_id' => $seeker->id, 'name' => 'English']);
         $this->assertDatabaseHas('certifications', ['user_id' => $seeker->id, 'name' => 'AWS Associate']);
-        $this->assertDatabaseHas('notification_preferences', ['user_id' => $seeker->id, 'email_application_updates' => false]);
     }
 
     public function test_public_company_page_and_recommendations_render(): void

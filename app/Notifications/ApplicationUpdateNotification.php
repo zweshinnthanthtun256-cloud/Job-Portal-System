@@ -24,5 +24,4 @@ class ApplicationUpdateNotification extends Notification implements ShouldQueue
     {
         return ['title' => $this->title, 'message' => $this->message, 'application_id' => $this->application->id, 'job_id' => $this->application->job_id];
     }
-
 }

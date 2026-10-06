@@ -18,7 +18,7 @@ class AuthenticationTest extends TestCase
             'password' => 'SecurePass123', 'password_confirmation' => 'SecurePass123', 'account_type' => 'job_seeker',
         ]);
 
-        $response->assertRedirect(route('verification.notice'));
+        $response->assertRedirect(route('dashboard'));
         $this->assertAuthenticated();
         $user = User::where('email', 'nora@example.test')->firstOrFail();
         $this->assertDatabaseHas('job_seeker_profiles', ['user_id' => $user->id]);
@@ -30,7 +30,7 @@ class AuthenticationTest extends TestCase
             'first_name' => 'Maya', 'last_name' => 'Chen', 'email' => 'maya@example.test',
             'password' => 'SecurePass123', 'password_confirmation' => 'SecurePass123', 'account_type' => 'employer',
             'company_name' => 'Bright River Labs', 'industry' => 'Software',
-        ])->assertRedirect(route('verification.notice'));
+        ])->assertRedirect(route('dashboard'));
 
         $company = Company::where('slug', 'bright-river-labs')->firstOrFail();
         $this->assertDatabaseHas('company_user', ['company_id' => $company->id, 'role' => 'owner']);

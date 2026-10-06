@@ -9,7 +9,7 @@ class NotificationPreference extends Model
 {
     protected $guarded = ['id'];
 
-    protected $casts = ['database_enabled' => 'boolean', 'email_application_updates' => 'boolean', 'email_interviews' => 'boolean', 'email_recommendations' => 'boolean'];
+    protected $casts = ['database_enabled' => 'boolean'];
 
     public function user(): BelongsTo
     {

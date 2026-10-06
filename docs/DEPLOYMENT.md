@@ -13,4 +13,4 @@ The `queue` container restarts automatically and processes queued mail. The `sch
 
 To restore, stop application writes, decompress the selected database file into `mysql`, restore the upload archive into the `app-storage` volume, run `php artisan migrate --force`, and restart the app, queue, and scheduler services.
 
-Before each release, run `php artisan test`, the MySQL CI workflow, `pnpm run build`, and `vendor/bin/pint --test`. After deployment, verify registration, email verification, password reset, application submission, interview email delivery, upload/download authorization, and queue health.
+Before each release, run `php artisan test`, the MySQL CI workflow, `pnpm run build`, and `vendor/bin/pint --test`. After deployment, verify registration, application submission, in-app notifications, upload/download authorization, and queue health.
