@@ -1,2 +1,41 @@
-import {Head,router,useForm} from '@inertiajs/react';import DashboardLayout from '../../Layouts/DashboardLayout';
-export default function Index({notifications,preferences}){const f=useForm({database_enabled:preferences.database_enabled,email_application_updates:preferences.email_application_updates,email_interviews:preferences.email_interviews,email_recommendations:preferences.email_recommendations});const items=[['database_enabled','In-app notifications'],['email_application_updates','Application emails'],['email_interviews','Interview emails'],['email_recommendations','Recommendation emails']];return <DashboardLayout title="Notifications"><Head title="Notifications"/><div className="grid gap-7 lg:grid-cols-[1fr_340px]"><section><div className="mb-4 text-right"><button onClick={()=>router.post('/notifications/read-all')} className="btn btn-secondary">Mark all read</button></div><div className="glass overflow-hidden rounded-2xl">{notifications.data.map(n=><button key={n.id} onClick={()=>router.patch(`/notifications/${n.id}`)} className={`block w-full border-b border-[#1e3a5f] p-5 text-left ${n.read_at?'opacity-60':'bg-blue-600/5'}`}><strong>{n.data.title||'Update'}</strong><p className="mt-1 text-sm text-slate-400">{n.data.message}</p></button>)}{!notifications.data.length&&<div className="p-12 text-center text-slate-400">You’re all caught up.</div>}</div></section><form onSubmit={e=>{e.preventDefault();f.put('/notifications/preferences')}} className="glass h-fit rounded-2xl p-6"><h2 className="text-xl font-bold">Delivery preferences</h2><p className="mt-2 text-sm text-slate-400">Email delivery runs through the queue.</p><div className="mt-5 grid gap-4">{items.map(([key,label])=><label key={key} className="flex items-center justify-between gap-4"><span>{label}</span><input type="checkbox" checked={f.data[key]} onChange={e=>f.setData(key,e.target.checked)}/></label>)}</div><button className="btn btn-primary mt-5">Save preferences</button></form></div></DashboardLayout>}
+import { Head, router } from "@inertiajs/react";
+import DashboardLayout from "../../Layouts/DashboardLayout";
+
+export default function Index({ notifications }) {
+    return (
+        <DashboardLayout title="Notifications">
+            <Head title="Notifications" />
+            <section>
+                <div className="mb-4 text-right">
+                    <button
+                        onClick={() => router.post("/notifications/read-all")}
+                        className="btn btn-secondary"
+                    >
+                        Mark all read
+                    </button>
+                </div>
+                <div className="glass overflow-hidden rounded-2xl">
+                    {notifications.data.map((notification) => (
+                        <button
+                            key={notification.id}
+                            onClick={() =>
+                                router.patch(`/notifications/${notification.id}`)
+                            }
+                            className={`block w-full border-b border-[#1e3a5f] p-5 text-left ${notification.read_at ? "opacity-60" : "bg-blue-600/5"}`}
+                        >
+                            <strong>{notification.data.title || "Update"}</strong>
+                            <p className="mt-1 text-sm text-slate-400">
+                                {notification.data.message}
+                            </p>
+                        </button>
+                    ))}
+                    {!notifications.data.length && (
+                        <div className="p-12 text-center text-slate-400">
+                            You’re all caught up.
+                        </div>
+                    )}
+                </div>
+            </section>
+        </DashboardLayout>
+    );
+}

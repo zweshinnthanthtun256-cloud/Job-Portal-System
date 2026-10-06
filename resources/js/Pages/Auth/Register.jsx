@@ -1,4 +1,136 @@
-import { Head, Link, useForm } from '@inertiajs/react';
-import PublicLayout from '../../Layouts/PublicLayout';
-const Field=({label,error,...props})=><label className="block"><span className="label">{label}</span><input className="field" {...props}/>{error&&<span className="error block">{error}</span>}</label>;
-export default function Register(){const form=useForm({first_name:'',last_name:'',email:'',password:'',password_confirmation:'',account_type:'job_seeker',company_name:'',industry:''});const change=k=>e=>form.setData(k,e.target.value);const submit=e=>{e.preventDefault();form.post('/register');};return <PublicLayout><Head title="Create account"/><main className="container-wide grid place-items-center py-12"><form onSubmit={submit} className="glass w-full max-w-2xl rounded-2xl p-7 md:p-9"><p className="text-sm font-bold uppercase tracking-[.2em] text-blue-400">Join JobSphere</p><h1 className="mt-2 text-3xl font-bold">Create your account</h1><div className="mt-7 grid grid-cols-2 gap-3 rounded-xl bg-[#081426] p-1"><button type="button" onClick={()=>form.setData('account_type','job_seeker')} className={`rounded-lg p-3 font-semibold ${form.data.account_type==='job_seeker'?'bg-blue-600':'text-slate-400'}`}>I’m looking for a job</button><button type="button" onClick={()=>form.setData('account_type','employer')} className={`rounded-lg p-3 font-semibold ${form.data.account_type==='employer'?'bg-blue-600':'text-slate-400'}`}>I’m hiring</button></div><div className="mt-6 grid gap-5 md:grid-cols-2"><Field label="First name" value={form.data.first_name} onChange={change('first_name')} error={form.errors.first_name} required/><Field label="Last name" value={form.data.last_name} onChange={change('last_name')} error={form.errors.last_name} required/><Field label="Email" type="email" value={form.data.email} onChange={change('email')} error={form.errors.email} required/><span/>{form.data.account_type==='employer'&&<><Field label="Company name" value={form.data.company_name} onChange={change('company_name')} error={form.errors.company_name} required/><Field label="Industry" value={form.data.industry} onChange={change('industry')} error={form.errors.industry} required/></>}<Field label="Password" type="password" value={form.data.password} onChange={change('password')} error={form.errors.password} required/><Field label="Confirm password" type="password" value={form.data.password_confirmation} onChange={change('password_confirmation')} required/></div><button disabled={form.processing} className="btn btn-primary mt-7 w-full">{form.processing?'Creating account…':'Create account'}</button><p className="mt-6 text-center text-sm text-slate-400">Already have an account? <Link href="/login" className="text-blue-300">Log in</Link></p></form></main></PublicLayout>}
+import { Head, Link, useForm } from "@inertiajs/react";
+import PublicLayout from "../../Layouts/PublicLayout";
+const Field = ({ label, error, ...props }) => (
+    <label className="block">
+        <span className="label">{label}</span>
+        <input className="field" {...props} />
+        {error && <span className="error block">{error}</span>}
+    </label>
+);
+export default function Register() {
+    const form = useForm({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        account_type: "job_seeker",
+        company_name: "",
+        industry: "",
+    });
+    const change = (k) => (e) => form.setData(k, e.target.value);
+    const submit = (e) => {
+        e.preventDefault();
+        form.post("/register");
+    };
+    return (
+        <PublicLayout>
+            <Head title="Create account" />
+            <main className="container-wide grid place-items-center py-12">
+                <form
+                    onSubmit={submit}
+                    className="glass w-full max-w-2xl rounded-2xl p-7 md:p-9"
+                >
+                    <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-400">
+                        Join JobSphere
+                    </p>
+                    <h1 className="mt-2 text-3xl font-bold">
+                        Create your account
+                    </h1>
+                    <div className="mt-7 grid grid-cols-2 gap-3 rounded-xl bg-[#081426] p-1">
+                        <button
+                            type="button"
+                            onClick={() =>
+                                form.setData("account_type", "job_seeker")
+                            }
+                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "job_seeker" ? "bg-blue-600" : "text-slate-400"}`}
+                        >
+                            I’m looking for a job
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                form.setData("account_type", "employer")
+                            }
+                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "employer" ? "bg-blue-600" : "text-slate-400"}`}
+                        >
+                            I’m hiring
+                        </button>
+                    </div>
+                    <div className="mt-6 grid gap-5 md:grid-cols-2">
+                        <Field
+                            label="First name"
+                            value={form.data.first_name}
+                            onChange={change("first_name")}
+                            error={form.errors.first_name}
+                            required
+                        />
+                        <Field
+                            label="Last name"
+                            value={form.data.last_name}
+                            onChange={change("last_name")}
+                            error={form.errors.last_name}
+                            required
+                        />
+                        <Field
+                            label="Email"
+                            type="email"
+                            value={form.data.email}
+                            onChange={change("email")}
+                            error={form.errors.email}
+                            required
+                        />
+                        <span />
+                        {form.data.account_type === "employer" && (
+                            <>
+                                <Field
+                                    label="Company name"
+                                    value={form.data.company_name}
+                                    onChange={change("company_name")}
+                                    error={form.errors.company_name}
+                                    required
+                                />
+                                <Field
+                                    label="Industry"
+                                    value={form.data.industry}
+                                    onChange={change("industry")}
+                                    error={form.errors.industry}
+                                    required
+                                />
+                            </>
+                        )}
+                        <Field
+                            label="Password"
+                            type="password"
+                            value={form.data.password}
+                            onChange={change("password")}
+                            error={form.errors.password}
+                            required
+                        />
+                        <Field
+                            label="Confirm password"
+                            type="password"
+                            value={form.data.password_confirmation}
+                            onChange={change("password_confirmation")}
+                            required
+                        />
+                    </div>
+                    <button
+                        disabled={form.processing}
+                        className="btn btn-primary mt-7 w-full"
+                    >
+                        {form.processing
+                            ? "Creating account…"
+                            : "Create account"}
+                    </button>
+                    <p className="mt-6 text-center text-sm text-slate-400">
+                        Already have an account?{" "}
+                        <Link href="/login" className="text-blue-300">
+                            Log in
+                        </Link>
+                    </p>
+                </form>
+            </main>
+        </PublicLayout>
+    );
+}

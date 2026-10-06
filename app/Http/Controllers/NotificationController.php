@@ -11,7 +11,7 @@ class NotificationController extends Controller
 {
     public function index(Request $request): Response
     {
-        return Inertia::render('Notifications/Index', ['notifications' => $request->user()->notifications()->paginate(20), 'preferences' => $request->user()->notificationPreference()->firstOrCreate()]);
+        return Inertia::render('Notifications/Index', ['notifications' => $request->user()->notifications()->paginate(20)]);
     }
 
     public function read(Request $request, string $notification): RedirectResponse
@@ -29,11 +29,4 @@ class NotificationController extends Controller
         return back()->with('success', 'All notifications marked as read.');
     }
 
-    public function preferences(Request $request): RedirectResponse
-    {
-        $data = $request->validate(['database_enabled' => ['boolean'], 'email_application_updates' => ['boolean'], 'email_interviews' => ['boolean'], 'email_recommendations' => ['boolean']]);
-        $request->user()->notificationPreference()->updateOrCreate([], $data);
-
-        return back()->with('success', 'Notification preferences saved.');
-    }
 }
