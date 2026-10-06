@@ -33,17 +33,9 @@ services:
       - key: LOG_CHANNEL
         value: stderr
       - key: MAIL_MAILER
-        value: smtp
-      - key: MAIL_HOST
-        value: smtp.gmail.com
-      - key: MAIL_PORT
-        value: "587"
-      - key: MAIL_USERNAME
+        value: brevo
+      - key: BREVO_API_KEY
         sync: false
-      - key: MAIL_PASSWORD
-        sync: false
-      - key: MAIL_SCHEME
-        value: smtp
       - key: MAIL_FROM_ADDRESS
         sync: false
       - key: MAIL_FROM_NAME

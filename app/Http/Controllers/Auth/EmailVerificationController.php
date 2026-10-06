@@ -13,7 +13,9 @@ class EmailVerificationController extends Controller
 {
     public function notice(Request $request): Response|RedirectResponse
     {
-        return $request->user()->hasVerifiedEmail() ? redirect()->route('dashboard') : Inertia::render('Auth/VerifyEmail');
+        return $request->user()->hasVerifiedEmail()
+            ? redirect()->route('dashboard')
+            : Inertia::render('Auth/VerifyEmail', ['email' => $request->user()->email]);
     }
 
     public function verify(EmailVerificationRequest $request): RedirectResponse
@@ -27,8 +29,10 @@ class EmailVerificationController extends Controller
     {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->route('dashboard');
-        }$request->user()->sendEmailVerificationNotification();
+        }
 
-        return back()->with('success', 'Verification link sent.');
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('success', 'A new verification link has been queued for delivery.');
     }
 }

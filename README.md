@@ -2,7 +2,7 @@
 
 **Find the right job. Hire the right talent.**
 
-JobSphere is a production-oriented job portal built with Laravel 12, React, Inertia.js, Tailwind CSS, and MySQL. It includes role-aware authentication, scored candidate profiles with languages and certifications, private PDF resumes, company membership and public brand pages, complete employer job management, application timelines and withdrawal, conflict-aware interview scheduling, in-app notifications, recommendations, reports, audit logging, administration analytics/settings, development seed data, and focused security tests.
+JobSphere is a production-oriented job portal built with Laravel 12, React, Inertia.js, Tailwind CSS, and MySQL. It includes role-aware authentication with queued email verification, scored candidate profiles with languages and certifications, private PDF resumes, company membership and public brand pages, complete employer job management, application timelines and withdrawal, conflict-aware interview scheduling, in-app notifications, recommendations, reports, audit logging, administration analytics/settings, development seed data, and focused security tests.
 
 ## Requirements
 
@@ -52,7 +52,7 @@ pnpm run build
 ./vendor/bin/pint --test
 ```
 
-The feature suite covers registration, employer company ownership, login/logout, job lifecycle operations, application withdrawal, duplicate applications, expired jobs, private resume access, company-member privileges, interview isolation and time conflicts, profile extensions, in-app notifications, admin authorization, and cross-company isolation. The CI workflow runs the suite against MySQL 8.4.
+The feature suite covers registration, email verification and resend behavior, employer company ownership, login/logout, job lifecycle operations, application withdrawal, duplicate applications, expired jobs, private resume access, company-member privileges, interview isolation and time conflicts, profile extensions, in-app notifications, admin authorization, and cross-company isolation. The CI workflow runs the suite against MySQL 8.4.
 
 ## Architecture and security
 
@@ -68,6 +68,6 @@ CSRF protection, password hashing, parameter binding, session regeneration, logi
 
 ## Production notes
 
-Set `APP_ENV=production`, `APP_DEBUG=false`, a strong generated `APP_KEY`, secure database credentials, and a real mail transport. Serve the app over HTTPS and never run the demo seeder in production.
+Set `APP_ENV=production`, `APP_DEBUG=false`, a strong generated `APP_KEY`, secure database credentials, `MAIL_MAILER=brevo`, a Brevo API key, and a verified sender address. Serve the app over HTTPS and never run the demo seeder in production.
 
-Use [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the Docker/MySQL/Redis/Nginx deployment, queue supervision, SMTP configuration, and daily backups. Use [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) for the keyboard, screen-reader, zoom, contrast, and automated release checks.
+Use [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the Docker/MySQL/Redis/Nginx deployment, queue supervision, email API configuration, and daily backups. Use [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) for the keyboard, screen-reader, zoom, contrast, and automated release checks.
