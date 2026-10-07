@@ -25,6 +25,6 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
         $request->session()->regenerate();
 
-        return redirect()->route('verification.notice')->with('success', 'Welcome to JobSphere. Verify your email to continue.');
+        return redirect()->route('dashboard')->with('success', 'Welcome to JobSphere.');
     }
 }

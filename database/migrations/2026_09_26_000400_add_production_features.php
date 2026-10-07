@@ -45,9 +45,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
             $table->boolean('database_enabled')->default(true);
-            $table->boolean('email_application_updates')->default(true);
-            $table->boolean('email_interviews')->default(true);
-            $table->boolean('email_recommendations')->default(false);
             $table->timestamps();
         });
 
