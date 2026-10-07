@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/experiences', [ProfileController::class, 'experience'])->middleware('role:job_seeker')->name('profile.experience.store');
     Route::delete('/profile/experiences/{experience}', [ProfileController::class, 'destroyExperience'])->middleware('role:job_seeker')->name('profile.experience.destroy');
     Route::put('/profile/skills', [ProfileController::class, 'skills'])->middleware('role:job_seeker')->name('profile.skills');
+    Route::post('/profile/skills', [ProfileController::class, 'addSkill'])->middleware('role:job_seeker')->name('profile.skills.add');
     Route::post('/profile/resumes', [ProfileController::class, 'resume'])->middleware('role:job_seeker')->name('profile.resume.store');
     Route::post('/profile/photo', [ProfileController::class, 'photo'])->middleware('role:job_seeker')->name('profile.photo');
     Route::post('/profile/languages', [ProfileController::class, 'language'])->middleware('role:job_seeker')->name('profile.languages.store');

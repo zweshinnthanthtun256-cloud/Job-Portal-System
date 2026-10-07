@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -95,6 +96,32 @@ class ProfileController extends Controller
         $logger->log('profile.skills_updated', $request->user(), null, ['skill_ids' => $data['skills'] ?? []]);
 
         return back()->with('success', 'Skills updated.');
+    }
+
+    public function addSkill(Request $request, ActivityLogger $logger): RedirectResponse
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:80', 'regex:/[\pL\pN]/u'],
+        ]);
+        $name = preg_replace('/\s+/u', ' ', trim($data['name']));
+        $slug = Str::slug($name) ?: 'skill';
+
+        $skill = Skill::query()->whereRaw('LOWER(name) = ?', [Str::lower($name)])->first();
+
+        if (! $skill) {
+            if (Skill::where('slug', $slug)->exists()) {
+                $slug .= '-'.substr(sha1(Str::lower($name)), 0, 8);
+            }
+
+            $skill = Skill::create(['name' => $name, 'slug' => $slug]);
+        }
+
+        $request->user()->skills()->syncWithoutDetaching([
+            $skill->id => ['proficiency' => 'intermediate'],
+        ]);
+        $logger->log('profile.skill_added', $request->user(), null, ['skill_id' => $skill->id]);
+
+        return back()->with('success', 'Skill added to your profile.');
     }
 
     public function resume(Request $request, ActivityLogger $logger): RedirectResponse

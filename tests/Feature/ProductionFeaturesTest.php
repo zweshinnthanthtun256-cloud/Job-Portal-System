@@ -57,11 +57,15 @@ class ProductionFeaturesTest extends TestCase
     {
         $seeker = User::factory()->create();
         $this->actingAs($seeker)->get(route('profile.edit'))->assertOk();
+        $this->actingAs($seeker)->post(route('profile.skills.add'), ['name' => 'GraphQL'])->assertSessionHasNoErrors();
+        $this->actingAs($seeker)->post(route('profile.skills.add'), ['name' => 'GraphQL'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->post(route('profile.languages.store'), ['name' => 'English', 'proficiency' => 'professional'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->post(route('profile.certifications.store'), ['name' => 'AWS Associate', 'issuer' => 'AWS'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->get(route('notifications.index'))->assertOk();
         $this->assertDatabaseHas('languages', ['user_id' => $seeker->id, 'name' => 'English']);
         $this->assertDatabaseHas('certifications', ['user_id' => $seeker->id, 'name' => 'AWS Associate']);
+        $this->assertDatabaseCount('skills', 1);
+        $this->assertDatabaseHas('user_skill', ['user_id' => $seeker->id]);
     }
 
     public function test_public_company_page_and_recommendations_render(): void
