@@ -56,6 +56,7 @@ class ProductionFeaturesTest extends TestCase
     public function test_profile_extensions_and_notifications_page_are_available(): void
     {
         $seeker = User::factory()->create();
+        $this->actingAs($seeker)->get(route('profile.edit'))->assertOk();
         $this->actingAs($seeker)->post(route('profile.languages.store'), ['name' => 'English', 'proficiency' => 'professional'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->post(route('profile.certifications.store'), ['name' => 'AWS Associate', 'issuer' => 'AWS'])->assertSessionHasNoErrors();
         $this->actingAs($seeker)->get(route('notifications.index'))->assertOk();
