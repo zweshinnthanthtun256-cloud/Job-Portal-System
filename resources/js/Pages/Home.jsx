@@ -14,26 +14,26 @@ export default function Home({ featuredJobs, stats }) {
         <PublicLayout>
             <Head title="Find the right job. Hire the right talent." />
             <main>
-                <section className="container-wide grid items-center gap-12 py-20 lg:grid-cols-[1.05fr_.95fr] lg:py-28">
+                <section className="container-wide grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)] lg:py-20">
                     <div>
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">
+                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 text-sm text-blue-200">
                             <Sparkles size={16} /> The modern way to move your
                             career forward
                         </div>
-                        <h1 className="max-w-3xl text-5xl font-black leading-[1.06] tracking-tight md:text-7xl">
+                        <h1 className="max-w-3xl text-4xl font-black leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
                             Your Career{" "}
                             <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
                                 Starts Here
                             </span>
                         </h1>
-                        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400">
+                        <p className="mt-5 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
                             Discover opportunities from teams looking for talent
                             like you. Search with confidence and apply in
                             minutes.
                         </p>
                         <form
                             onSubmit={submit}
-                            className="glass mt-9 grid gap-3 rounded-2xl p-3 md:grid-cols-[1fr_1fr_auto]"
+                            className="glass mt-7 grid gap-3 rounded-2xl p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
                         >
                             <label className="relative">
                                 
@@ -54,10 +54,10 @@ export default function Home({ featuredJobs, stats }) {
                                 Search jobs <ArrowRight size={17} />
                             </button>
                         </form>
-                        <div className="mt-8 flex flex-wrap gap-6 text-sm text-slate-400">
+                        <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-400">
                             {Object.entries(stats).map(([key, value]) => (
                                 <div key={key}>
-                                    <strong className="block text-2xl text-white">
+                                    <strong className="block text-xl text-white">
                                         {value.toLocaleString()}
                                     </strong>
                                     {key}
@@ -65,9 +65,9 @@ export default function Home({ featuredJobs, stats }) {
                             ))}
                         </div>
                     </div>
-                    <div className="glass relative hidden min-h-[470px] overflow-hidden rounded-[2rem] p-8 lg:block">
+                    <div className="glass relative hidden min-h-[400px] overflow-hidden rounded-3xl p-6 lg:block">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-cyan-400/5" />
-                        <div className="relative rounded-2xl border border-blue-400/20 bg-[#0d1b2a] p-6">
+                        <div className="relative rounded-2xl border border-blue-400/20 bg-[#0d1b2a] p-5">
                             <div className="flex items-center gap-4">
                                 <div className="grid size-14 place-items-center rounded-2xl bg-blue-600">
                                     <Users />
@@ -82,7 +82,7 @@ export default function Home({ featuredJobs, stats }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute bottom-16 left-12 right-12 rounded-2xl border border-cyan-400/20 bg-[#10233a] p-6 shadow-2xl">
+                        <div className="absolute bottom-10 left-8 right-8 rounded-2xl border border-cyan-400/20 bg-[#10233a] p-5 shadow-2xl">
                             <p className="text-sm text-cyan-300">
                                 JobSphere match
                             </p>
@@ -95,7 +95,7 @@ export default function Home({ featuredJobs, stats }) {
                         </div>
                     </div>
                 </section>
-                <section className="container-wide pb-24">
+                <section className="container-wide pb-16 sm:pb-20">
                     <div className="mb-8 flex items-end justify-between">
                         <div>
                             <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-400">
