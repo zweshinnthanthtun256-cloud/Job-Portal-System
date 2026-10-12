@@ -1,5 +1,5 @@
 import { Head, Link, router } from "@inertiajs/react";
-import { ArrowRight, Search, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Sparkles, Users } from "lucide-react";
 import { useState } from "react";
 import JobCard from "../Components/JobCard";
 import PublicLayout from "../Layouts/PublicLayout";
@@ -36,20 +36,23 @@ export default function Home({ featuredJobs, stats }) {
                             className="glass mt-7 grid gap-3 rounded-2xl p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
                         >
                             <label className="relative">
-                                
+                                <span className="sr-only">Job title or keyword</span>
                                 <input
-                                    className="field pl-11"
+                                    className="field"
                                     value={q}
                                     onChange={(e) => setQ(e.target.value)}
                                     placeholder="Job title or keyword"
                                 />
                             </label>
-                            <input
-                                className="field"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="City or country"
-                            />
+                            <label>
+                                <span className="sr-only">City or country</span>
+                                <input
+                                    className="field"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="City or country"
+                                />
+                            </label>
                             <button className="btn btn-primary">
                                 Search jobs <ArrowRight size={17} />
                             </button>

@@ -71,3 +71,5 @@ CSRF protection, password hashing, parameter binding, session regeneration, logi
 Set `APP_ENV=production`, `APP_DEBUG=false`, a strong generated `APP_KEY`, and secure database credentials. Serve the app over HTTPS and never run the demo seeder in production. This application does not send email; account email addresses are used for login and account records only.
 
 Use [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the Docker/MySQL/Redis/Nginx deployment, queue supervision, and daily backups. Use [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) for the keyboard, screen-reader, zoom, contrast, and automated release checks.
+
+The complete Myanmar-language user guide is available at [docs/USER_GUIDE_MM.md](docs/USER_GUIDE_MM.md).
