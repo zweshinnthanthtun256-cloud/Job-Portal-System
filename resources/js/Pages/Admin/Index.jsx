@@ -43,7 +43,7 @@ function Library({ title, items, path }) {
                 {items.map((x) => (
                     <span
                         key={x.id}
-                        className="rounded-full bg-white/5 px-3 py-2 text-sm"
+                        className="rounded-full bg-slate-100 px-3 py-2 text-sm"
                     >
                         {x.name}{" "}
                         <button
@@ -51,7 +51,7 @@ function Library({ title, items, path }) {
                             onClick={() =>
                                 router.delete(`/admin/${path}/${x.id}`)
                             }
-                            className="ml-2 text-red-300"
+                            className="ml-2 text-red-600"
                         >
                             ×
                         </button>
@@ -68,7 +68,7 @@ function Analytics({ analytics }) {
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
                 {Object.entries(analytics.totals).map(([k, v]) => (
                     <div className="glass rounded-2xl p-5" key={k}>
-                        <p className="text-sm text-slate-400">
+                        <p className="text-sm text-slate-500">
                             {k.replaceAll("_", " ")}
                         </p>
                         <strong className="mt-2 block text-3xl">{v}</strong>
@@ -89,7 +89,7 @@ function Analytics({ analytics }) {
                             title={`${label}: ${analytics.jobs[i]} jobs, ${analytics.applications[i]} applications`}
                         >
                             <span
-                                className="w-1/2 rounded-t bg-blue-500"
+                                className="w-1/2 rounded-t bg-[#7132a8]"
                                 style={{
                                     height: `${Math.max(3, (analytics.jobs[i] / max) * 100)}%`,
                                 }}
@@ -103,8 +103,8 @@ function Analytics({ analytics }) {
                         </div>
                     ))}
                 </div>
-                <div className="mt-3 flex gap-5 text-xs text-slate-400">
-                    <span>● Blue: jobs</span>
+                <div className="mt-3 flex gap-5 text-xs text-slate-500">
+                    <span>● Purple: jobs</span>
                     <span>● Green: applications</span>
                 </div>
             </section>
@@ -201,7 +201,7 @@ export default function Index({
                     <h2 className="text-xl font-bold">Users</h2>
                     <table className="mt-4 w-full min-w-[650px]">
                         <thead>
-                            <tr className="text-left text-sm text-slate-400">
+                            <tr className="text-left text-sm text-slate-500">
                                 <th className="p-3">User</th>
                                 <th>Role</th>
                                 <th>Status</th>
@@ -211,11 +211,11 @@ export default function Index({
                             {users.data.map((u) => (
                                 <tr
                                     key={u.id}
-                                    className="border-t border-[#1e3a5f]"
+                                    className="border-t border-slate-200"
                                 >
                                     <td className="p-3">
                                         {u.name}
-                                        <div className="text-xs text-slate-400">
+                                        <div className="text-xs text-slate-500">
                                             {u.email}
                                         </div>
                                     </td>
@@ -242,11 +242,11 @@ export default function Index({
                     {companies.data.map((c) => (
                         <div
                             key={c.id}
-                            className="flex items-center justify-between border-t border-[#1e3a5f] py-4"
+                            className="flex items-center justify-between border-t border-slate-200 py-4"
                         >
                             <span>
                                 {c.name}
-                                <small className="block text-slate-400">
+                                <small className="block text-slate-500">
                                     {c.industry}
                                 </small>
                             </span>
@@ -272,11 +272,11 @@ export default function Index({
                     {jobs.data.map((j) => (
                         <div
                             key={j.id}
-                            className="flex items-center justify-between border-t border-[#1e3a5f] py-4"
+                            className="flex items-center justify-between border-t border-slate-200 py-4"
                         >
                             <span>
                                 {j.title} ·{" "}
-                                <span className="text-slate-400">
+                                <span className="text-slate-500">
                                     {j.company.name}
                                 </span>
                             </span>
@@ -310,12 +310,12 @@ export default function Index({
                                     Object.fromEntries(d),
                                 );
                             }}
-                            className="border-t border-[#1e3a5f] py-4"
+                            className="border-t border-slate-200 py-4"
                         >
                             <div className="flex flex-wrap justify-between gap-3">
                                 <div>
                                     <strong>{r.reason}</strong>
-                                    <p className="text-sm text-slate-400">
+                                    <p className="text-sm text-slate-500">
                                         Reported by{" "}
                                         {r.reporter?.name || "Unknown"} ·{" "}
                                         {new Date(
@@ -355,10 +355,10 @@ export default function Index({
                     {audits.map((a) => (
                         <div
                             key={a.id}
-                            className="border-t border-[#1e3a5f] py-3 text-sm"
+                            className="border-t border-slate-200 py-3 text-sm"
                         >
                             <strong>{a.event}</strong>
-                            <span className="ml-3 text-slate-400">
+                            <span className="ml-3 text-slate-500">
                                 {a.user?.name || "System"} ·{" "}
                                 {new Date(a.created_at).toLocaleString()} ·{" "}
                                 {a.ip_address}

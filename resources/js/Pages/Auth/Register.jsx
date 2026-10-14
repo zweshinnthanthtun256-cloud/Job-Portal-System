@@ -31,19 +31,19 @@ export default function Register() {
                     onSubmit={submit}
                     className="glass w-full max-w-2xl rounded-2xl p-7 md:p-9"
                 >
-                    <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-400">
+                    <p className="text-sm font-bold uppercase tracking-[.2em] text-[#7132a8]">
                         Join JobSphere
                     </p>
                     <h1 className="mt-2 text-3xl font-bold">
                         Create your account
                     </h1>
-                    <div className="mt-7 grid grid-cols-2 gap-3 rounded-xl bg-[#081426] p-1">
+                    <div className="mt-7 grid grid-cols-2 gap-3 rounded-xl bg-slate-100 p-1">
                         <button
                             type="button"
                             onClick={() =>
                                 form.setData("account_type", "job_seeker")
                             }
-                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "job_seeker" ? "bg-blue-600" : "text-slate-400"}`}
+                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "job_seeker" ? "bg-[#7132a8] text-white shadow-sm" : "text-slate-500"}`}
                         >
                             I’m looking for a job
                         </button>
@@ -52,7 +52,7 @@ export default function Register() {
                             onClick={() =>
                                 form.setData("account_type", "employer")
                             }
-                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "employer" ? "bg-blue-600" : "text-slate-400"}`}
+                            className={`rounded-lg p-3 font-semibold ${form.data.account_type === "employer" ? "bg-[#7132a8] text-white shadow-sm" : "text-slate-500"}`}
                         >
                             I’m hiring
                         </button>
@@ -123,9 +123,9 @@ export default function Register() {
                             ? "Creating account…"
                             : "Create account"}
                     </button>
-                    <p className="mt-6 text-center text-sm text-slate-400">
+                    <p className="mt-6 text-center text-sm text-slate-500">
                         Already have an account?{" "}
-                        <Link href="/login" className="text-blue-300">
+                        <Link href="/login" className="text-[#7132a8]">
                             Log in
                         </Link>
                     </p>

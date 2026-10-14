@@ -1,6 +1,15 @@
 import { Link } from '@inertiajs/react';
 import { Building2, Clock3, MapPin } from 'lucide-react';
+
 const label = (value = '') => value.replaceAll('_', ' ').replace(/\b\w/g, c => c.toUpperCase());
+
 export default function JobCard({ job }) {
- return <Link href={`/jobs/${job.slug}`} className="glass group block rounded-2xl p-4 transition hover:-translate-y-0.5 hover:border-blue-500/50"><div className="flex gap-3"><div className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600/15 text-blue-300"><Building2 size={20}/></div><div className="min-w-0"><h3 className="truncate text-base font-bold group-hover:text-blue-300">{job.title}</h3><p className="mt-1 text-sm text-slate-400">{job.company?.name}</p></div></div><div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300"><span className="rounded-full bg-white/5 px-2.5 py-1.5"><MapPin size={13} className="mr-1 inline"/>{job.city || job.country || 'Flexible'}</span><span className="rounded-full bg-white/5 px-2.5 py-1.5">{label(job.work_arrangement)}</span><span className="rounded-full bg-white/5 px-2.5 py-1.5"><Clock3 size={13} className="mr-1 inline"/>{label(job.employment_type)}</span></div>{job.salary_visible && job.salary_min && <p className="mt-4 font-semibold text-blue-300">{job.salary_currency} {Number(job.salary_min).toLocaleString()} {job.salary_max ? `– ${Number(job.salary_max).toLocaleString()}` : '+'}</p>}</Link>;
+    return <Link href={`/jobs/${job.slug}`} className="group block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-purple-300 hover:shadow-lg">
+        <div className="flex gap-3">
+            <div className="grid size-12 shrink-0 place-items-center rounded-lg border border-purple-100 bg-purple-50 text-[#7132a8]"><Building2 size={21}/></div>
+            <div className="min-w-0"><h3 className="truncate text-base font-bold text-slate-900 group-hover:text-[#7132a8]">{job.title}</h3><p className="mt-1 truncate text-sm text-slate-500">{job.company?.name}</p></div>
+        </div>
+        <div className="mt-4 grid gap-2 text-sm text-slate-500"><span><MapPin size={14} className="mr-1.5 inline text-purple-500"/>{job.city || job.country || 'Flexible location'}</span><span><Clock3 size={14} className="mr-1.5 inline text-purple-500"/>{label(job.employment_type)} · {label(job.work_arrangement)}</span></div>
+        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">{job.salary_visible && job.salary_min ? <p className="font-bold text-[#7132a8]">{job.salary_currency} {Number(job.salary_min).toLocaleString()}{job.salary_max ? `–${Number(job.salary_max).toLocaleString()}` : '+'}</p> : <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Salary negotiable</p>}<span className="text-sm font-bold text-[#7132a8]">View job →</span></div>
+    </Link>;
 }

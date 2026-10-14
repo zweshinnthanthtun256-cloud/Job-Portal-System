@@ -14,13 +14,13 @@ export default function Login() {
                     onSubmit={submit}
                     className="glass w-full max-w-md rounded-2xl p-7 md:p-9"
                 >
-                    <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-400">
+                    <p className="text-sm font-bold uppercase tracking-[.2em] text-[#7132a8]">
                         Welcome back
                     </p>
                     <h1 className="mt-2 text-3xl font-bold">
                         Log in to JobSphere
                     </h1>
-                    <p className="mt-2 text-slate-400">
+                    <p className="mt-2 text-slate-500">
                         Continue your job search or manage your hiring pipeline.
                     </p>
                     <div className="mt-7">
@@ -58,7 +58,7 @@ export default function Login() {
                             required
                         />
                     </div>
-                    <label className="mt-5 flex gap-2 text-sm text-slate-400">
+                    <label className="mt-5 flex gap-2 text-sm text-slate-500">
                         <input
                             type="checkbox"
                             checked={form.data.remember}
@@ -74,9 +74,9 @@ export default function Login() {
                     >
                         {form.processing ? "Signing in…" : "Log in"}
                     </button>
-                    <p className="mt-6 text-center text-sm text-slate-400">
+                    <p className="mt-6 text-center text-sm text-slate-500">
                         New here?{" "}
-                        <Link href="/register" className="text-blue-300">
+                        <Link href="/register" className="text-[#7132a8]">
                             Create an account
                         </Link>
                     </p>

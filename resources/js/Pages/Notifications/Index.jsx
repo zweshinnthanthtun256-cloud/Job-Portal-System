@@ -21,16 +21,16 @@ export default function Index({ notifications }) {
                             onClick={() =>
                                 router.patch(`/notifications/${notification.id}`)
                             }
-                            className={`block w-full border-b border-[#1e3a5f] p-5 text-left ${notification.read_at ? "opacity-60" : "bg-blue-600/5"}`}
+                            className={`block w-full border-b border-slate-200 p-5 text-left ${notification.read_at ? "opacity-60" : "bg-purple-50"}`}
                         >
                             <strong>{notification.data.title || "Update"}</strong>
-                            <p className="mt-1 text-sm text-slate-400">
+                            <p className="mt-1 text-sm text-slate-500">
                                 {notification.data.message}
                             </p>
                         </button>
                     ))}
                     {!notifications.data.length && (
-                        <div className="p-12 text-center text-slate-400">
+                        <div className="p-12 text-center text-slate-500">
                             You’re all caught up.
                         </div>
                     )}
